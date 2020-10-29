@@ -1,0 +1,13 @@
+# Target labels
+ mconf-idf
+# Source files and their labels
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/CMakeFiles/mconf-idf
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/CMakeFiles/mconf-idf.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/CMakeFiles/mconf-idf-complete.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-install.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-mkdir.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-download.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-update.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-patch.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-configure.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader/mconf-idf-prefix/src/mconf-idf-stamp/mconf-idf-build.rule

@@ -1,0 +1,13 @@
+# Target labels
+ bootloader
+# Source files and their labels
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/CMakeFiles/bootloader
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/CMakeFiles/bootloader.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/CMakeFiles/bootloader-complete.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule
+/home/lab/LABs/part1_iot_framework/lab1_framework/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule

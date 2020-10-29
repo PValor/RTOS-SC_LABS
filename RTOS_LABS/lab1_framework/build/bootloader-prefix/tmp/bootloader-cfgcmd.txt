@@ -1,0 +1,1 @@
+cmd='/usr/bin/cmake;-DSDKCONFIG=/home/lab/LABs/part1_iot_framework/lab1_framework/sdkconfig;-DIDF_PATH=/opt/esp-idf;-DIDF_TARGET=esp32;-DPYTHON=/home/lab/.espressif/python_env/idf4.0_py3.6_env/bin/python;-DPYTHON_DEPS_CHECKED=1;-DEXTRA_COMPONENT_DIRS=/opt/esp-idf/components/bootloader;-DLEGACY_INCLUDE_COMMON_HEADERS=;--warn-uninitialized;-GNinja;<SOURCE_DIR><SOURCE_SUBDIR>'
