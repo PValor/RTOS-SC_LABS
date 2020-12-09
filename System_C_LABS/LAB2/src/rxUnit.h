@@ -5,24 +5,24 @@
 
 SC_MODULE(rxUnit){
     sc_in<bool>         sysclk;
-    sc_in<bool>         reset;
-    sc_in<bool>         enable;
-    sc_in<bool>         read;
-    sc_in<bool>         rxd_in;
-    sc_out<sc_uint<8>>  data_out;
-    sc_out<bool>        frame_err;
-    sc_out<bool>        output_err;
-    sc_out<bool>        data_rdy;
+    sc_in<sc_logic>         reset;
+    sc_in<sc_logic>         enable;
+    sc_in<sc_logic>         read;
+    sc_in<sc_logic>         rxd_in;
+    sc_out<sc_lv<8>>  data_out;
+    sc_out<sc_logic>        frame_err;
+    sc_out<sc_logic>        output_err;
+    sc_out<sc_logic>        data_rdy;
 
-    bool temp_frame_err;
-    bool temp_output_err;
-    bool temp_data_rdy;
-    bool rxd;
+    sc_logic temp_frame_err;
+    sc_logic temp_output_err;
+    sc_logic temp_data_rdy;
+    sc_logic rxd;
 
-    bool get_data;
+    sc_logic get_data;
 
-    sc_uint<8> shift_reg;
-    sc_uint<8> TBuf;
+    sc_lv<8> shift_reg;
+    sc_lv<8> TBuf;
 
     int  bitCount;
 
@@ -39,7 +39,7 @@ SC_MODULE(rxUnit){
     }
     
     void rx_Unit_Thread(){
-        std::cout << "Starting RxUnit Thread" << std::endl;
+        // std::cout << "Starting RxUnit Thread" << std::endl;
 
         int bitCount;
         int clockCount = 0;
@@ -61,7 +61,7 @@ SC_MODULE(rxUnit){
             } else {
 
                 if(read -> read() == true){
-                    std::cout << sc_time_stamp() << " read_received " << std::endl;
+                    // std::cout << sc_time_stamp() << " read_received " << std::endl;
                     temp_data_rdy = false;
                     temp_output_err = false;
                     temp_data_rdy = false;
@@ -76,12 +76,12 @@ SC_MODULE(rxUnit){
                         get_data = (clockCount == 7)? true : false;
                     } else {
                         clockCount = 0;
-                        std::cout << sc_time_stamp() << " RAZ"<< std::endl;
+                        // std::cout << sc_time_stamp() << " RAZ"<< std::endl;
                     }
 
                 if(get_data == true){
                     rxd = rxd_in -> read();
-                    std::cout << sc_time_stamp() << " rxd = " << rxd << std::endl;
+                    // std::cout << sc_time_stamp() << " rxd = " << rxd << std::endl;
                     switch(bitCount){
                         case 0 : 
                             if(rxd == false){

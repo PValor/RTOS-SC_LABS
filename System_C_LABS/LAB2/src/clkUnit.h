@@ -5,11 +5,11 @@
 
 SC_MODULE(clkUnit){
     sc_in<bool>     sysclk;
-    sc_in<bool>     reset;
-    sc_out<bool>    en_tx;
-    sc_out<bool>    en_rx;
-    bool temp_en_tx;         
-    bool temp_en_rx;         
+    sc_in<sc_logic>     reset;
+    sc_out<sc_logic>    en_tx;
+    sc_out<sc_logic>    en_rx;
+    sc_logic temp_en_tx;         
+    sc_logic temp_en_rx;         
 
 
     SC_CTOR(clkUnit) : sysclk("sysclk"), reset("reset"), en_tx("en_tx"), en_rx("en_rx"){

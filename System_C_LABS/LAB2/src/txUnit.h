@@ -5,20 +5,20 @@
 
 SC_MODULE(txUnit){
     sc_in<bool>         sysclk;
-    sc_in<bool>         reset;
-    sc_in<bool>         enable;
-    sc_in<bool>         load;
-    sc_in<sc_uint<8>>   data_in;
-    sc_out<bool>        txd_send;
-    sc_out<bool>        reg_empty;
-    sc_out<bool>        buf_empty;
+    sc_in<sc_logic>         reset;
+    sc_in<sc_logic>         enable;
+    sc_in<sc_logic>         load;
+    sc_in<sc_lv<8>>   data_in;
+    sc_out<sc_logic>        txd_send;
+    sc_out<sc_logic>        reg_empty;
+    sc_out<sc_logic>        buf_empty;
 
-    sc_uint<8> TReg;
-    sc_uint<8> TBuf;
+    sc_lv<8> TReg;
+    sc_lv<8> TBuf;
 
-    bool temp_reg_empty;
-    bool temp_buf_empty;
-    bool txd;
+    sc_logic temp_reg_empty;
+    sc_logic temp_buf_empty;
+    sc_logic txd;
 
     int  bitCount;
 
@@ -73,7 +73,7 @@ SC_MODULE(txUnit){
                             break;
 
                             case  1 ... 8:
-                                txd = TReg & 0x01 ;
+                                txd = TReg[0] ;
                                 // std::cout << sc_time_stamp() << " : bitCount " << bitCount << ", TXD = " << txd << std::endl;
                                 TReg = TReg >> 1;
                                 bitCount++;

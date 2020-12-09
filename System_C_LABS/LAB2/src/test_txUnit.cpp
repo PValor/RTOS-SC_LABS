@@ -5,14 +5,14 @@
 void test_tx_unit() {
 	// Declare signals
 	sc_clock clk("clk",25,SC_NS);
-	sc_signal<bool>         reset_sig;
-	sc_signal<bool>         en_tx_sig;
-	sc_signal<bool>         en_rx_sig;
-    sc_signal<sc_uint<8>>   data_in_sig;
-    sc_signal<bool>         load_sig;
-    sc_signal<bool>     	txd_sig;
-    sc_signal<bool>         reg_empty_sig;
-    sc_signal<bool>         buf_empty_sig;
+	sc_signal<sc_logic>         reset_sig;
+	sc_signal<sc_logic>         en_tx_sig;
+	sc_signal<sc_logic>         en_rx_sig;
+    sc_signal<sc_lv<8>>   data_in_sig;
+    sc_signal<sc_logic>         load_sig;
+    sc_signal<sc_logic>     	txd_sig;
+    sc_signal<sc_logic>         reg_empty_sig;
+    sc_signal<sc_logic>         buf_empty_sig;
 	
 	// Declare ClkUnit
 	clkUnit clkUnit_inst("ClkUnit");
@@ -49,26 +49,26 @@ void test_tx_unit() {
 
 	// Reset
 	cout << sc_time_stamp() << ": " << "Reset ..." << endl;
-	load_sig.write(false);
-	reset_sig.write(true);
+	load_sig.write(SC_LOGIC_0);
+	reset_sig.write(SC_LOGIC_1);
 	sc_start(1, SC_US);
-	reset_sig.write(false);
+	reset_sig.write(SC_LOGIC_0);
 	sc_start(1, SC_US);
 
 	// Send 0x11 during 10 us
 	cout << sc_time_stamp() << ": " << "Load ..." << endl;
 	data_in_sig.write(0x11);
-	load_sig.write(true);
+	load_sig.write(SC_LOGIC_1);
 	sc_start(50, SC_NS);
-	load_sig.write(false);
+	load_sig.write(SC_LOGIC_0);
 	sc_start(600, SC_US);
 
 	// Send 0x22 and 0x33 without transition (... b7,Stop,Start,b0...)
 
 	data_in_sig.write(0xAA);
-	load_sig.write(true);
+	load_sig.write(SC_LOGIC_1);
 	sc_start(50, SC_NS);
-	load_sig.write(false);
+	load_sig.write(SC_LOGIC_0);
 	sc_start(2400, SC_US);
 
 	sc_close_vcd_trace_file(tf);

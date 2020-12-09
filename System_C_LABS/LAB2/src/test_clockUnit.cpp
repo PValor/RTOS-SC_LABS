@@ -4,9 +4,9 @@
 void test_clk_unit() {
 	// Declare signal
 	sc_clock clk("clk",25,SC_NS);
-	sc_signal<bool>         reset_sig;
-	sc_signal<bool>         en_tx_sig;
-	sc_signal<bool>         en_rx_sig;
+	sc_signal<sc_logic>         reset_sig;
+	sc_signal<sc_logic>         en_tx_sig;
+	sc_signal<sc_logic>         en_rx_sig;
 	
 	// Declare ClkUnit
 	clkUnit clkUnit_inst("ClkUnit");
