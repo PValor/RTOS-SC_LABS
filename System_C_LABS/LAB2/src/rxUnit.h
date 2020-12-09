@@ -85,7 +85,7 @@ SC_MODULE(rxUnit){
                     switch(bitCount){
                         case 0 : 
                             if(rxd == false){
-                                std::cout << sc_time_stamp() << " bit start detecte" << std::endl;
+                                // std::cout << sc_time_stamp() << " bit start detecte" << std::endl;
                                 bitCount++;
                             }
                         break;

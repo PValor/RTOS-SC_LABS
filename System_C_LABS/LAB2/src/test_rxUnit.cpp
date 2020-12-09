@@ -61,6 +61,7 @@ void test_rx_unit() {
 	sc_trace(tf, en_tx_sig, "tx_en");
 	sc_trace(tf, en_rx_sig, "rx_en");
 	sc_trace(tf, read_sig, "read");
+	sc_trace(tf, load_sig, "load");
 	sc_trace(tf, txd_sig, "txd");
 	sc_trace(tf, data_out_sig, "data_out");
 	sc_trace(tf, data_in_sig, "data_in");
@@ -89,7 +90,7 @@ void test_rx_unit() {
 	data_in_sig.write(0xAA);
 	load_sig.write(SC_LOGIC_1);
 	sc_start(50, SC_NS);
-	load_sig.write(SC_LOGIC_1);
+	load_sig.write(SC_LOGIC_0);
 	sc_start(2400, SC_US);
 
     

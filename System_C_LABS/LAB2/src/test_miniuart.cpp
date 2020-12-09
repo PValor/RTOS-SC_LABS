@@ -27,6 +27,8 @@ void test_miniuart() {
         miniuart_inst.data_out(data_uart_tb);
         miniuart_inst.irqTX(irqTX);
         miniuart_inst.irqRX(irqRX);
+        miniuart_inst.rxd(txd_rxd);
+        miniuart_inst.txd(txd_rxd);
 
 	// Declare TestBench
 	TestBench TestBench_inst("TestBench");
@@ -56,10 +58,11 @@ void test_miniuart() {
 	sc_trace(tf, wr, "wr");
 	sc_trace(tf, data_uart_tb, "data_uart_tb");
 	sc_trace(tf, data_tb_uart, "data_tb_uart");
+	sc_trace(tf, txd_rxd, "txd_rxd");
     
 
 	// Run simulation
-	sc_start(8, SC_MS);
+	sc_start(15, SC_MS);
 
 	// Close Trace
 	sc_close_vcd_trace_file(tf);

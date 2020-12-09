@@ -22,7 +22,7 @@ SC_MODULE(TestBench) {
 
 	// Data Members
 	sc_time CLK_PERIOD;	// 40 MHz
-	char *mess;
+	sc_uint<8> mess;
 	unsigned int cpt_car;
 
 	// Constructor
@@ -50,37 +50,56 @@ SC_MODULE(TestBench) {
     }
 
 	void main_thread(){
+        cout << sc_time_stamp() << ": " << "TestBench Main start " << endl;
+        bus_mutex.lock();
         cpt_car = 0;
-	    mess = (char *)"Hello !\n";
+	    mess = 0xA0;
 
 	    resetTest();
 	    wait(CLK_PERIOD * 5);
 
-	    cout << sc_time_stamp() << ": " << "Write Boot " << mess[cpt_car] << endl;
-	    write(0x00, mess[cpt_car]);
+	    cout << sc_time_stamp() << ": " << "Write Boot " << mess << endl;
+	    write(0x00, mess);
+        bus_mutex.unlock();
     }
 
 	void tx_isr_thread(){
+        cout << sc_time_stamp() << ": " << "TestBench tx_thread start " << endl;
         while (true) {
-            wait(irqTX->posedge_event());
-            cout << "TX Interrupt at time : " << sc_time_stamp() << endl;
-            if (cpt_car < sizeof(mess)) {
-                cpt_car += 1;
-                cout << sc_time_stamp() << ": " << "Write " << mess[cpt_car] << endl;
-                write(0x00, mess[cpt_car]);
+            if(bus_mutex.trylock() != -1){
+                std::cout << sc_time_stamp() << " tx trying, obtained mutex" << std::endl;
+                wait(irqTX->posedge_event());
+                std::cout << "TX Interrupt at time : " << sc_time_stamp() << std::endl;
+                if (cpt_car < 5) {
+                    cpt_car += 1;
+                    mess = mess+1;
+                    std::cout << sc_time_stamp() << ": " << "Write " << mess << std::endl;
+                    write(0x00, mess);
+                }
+                bus_mutex.unlock();
+            } else {
+                // std::cout << sc_time_stamp() << " tx trying, mutex locked " << std::endl;
+                wait(CLK_PERIOD*2);
             }
         }
     }
 
 	void rx_isr_thread(){ 
+        cout << sc_time_stamp() << ": " << "TestBench rx_thread start " << endl;
         sc_uint<8> value;
         while (true) {
-            wait(irqRX->posedge_event());
-            cout << "RX Interrupt at time : " << sc_time_stamp() << endl;
-            read(0x00, value);
-            cout << sc_time_stamp() << ": " << "Read " << char(value) << endl;
+            if(bus_mutex.trylock() != -1){
+                std::cout << sc_time_stamp() << " rx trying, obtained mutex" << std::endl;
+                wait(irqRX->posedge_event());
+                cout << "RX Interrupt at time : " << sc_time_stamp() << endl;
+                read(0x00, value);
+                cout << sc_time_stamp() << ": " << "Read " << char(value) << endl;
+            } else {
+                // std::cout << sc_time_stamp() << " rx trying, mutex locked " << std::endl;
+                wait(CLK_PERIOD*2);
+            }
         }
-    }
+    }  
 
 	// Helper Functions
 	void resetTest(void){
@@ -137,7 +156,7 @@ SC_MODULE(TestBench) {
         wait(CLK_PERIOD * 3);
 
         ce->write(SC_LOGIC_0);
-        wr->write(SC_LOGIC_0);
+        rd->write(SC_LOGIC_0);
         data_out->write("ZZZZZZZZ");
         wait(CLK_PERIOD);
 

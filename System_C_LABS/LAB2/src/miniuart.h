@@ -19,7 +19,8 @@ SC_MODULE(miniuart){
     sc_out<sc_logic> irqRX;
     sc_out<sc_logic> irqTX;
 
-    sc_signal<sc_logic>  txd_rxd;
+    sc_out<sc_logic>  txd;
+    sc_in<sc_logic>  rxd;
 
     // interface Process
     sc_signal<sc_logic> load;
@@ -57,7 +58,8 @@ SC_MODULE(miniuart){
                         data_out("data_out"),
                         irqRX("irqRX"),
                         irqTX("irqTX"),
-                        txd_rxd("rxd"),
+                        txd("txd"),
+                        rxd("rxd"),
                         clkUnit_inst("clock_Unit"),
                         txUnit_inst("tx_Unit"),
                         rxUnit_inst("rx_Unit"){
@@ -79,7 +81,7 @@ SC_MODULE(miniuart){
         txUnit_inst.enable(en_tx);
         txUnit_inst.load(load);
         txUnit_inst.data_in(tx_data);
-        txUnit_inst.txd_send(txd_rxd);
+        txUnit_inst.txd_send(txd);
         txUnit_inst.reg_empty(reg_empty);
         txUnit_inst.buf_empty(buf_empty);
 
@@ -89,7 +91,7 @@ SC_MODULE(miniuart){
         rxUnit_inst.enable(en_tx);
         rxUnit_inst.read(read);
         rxUnit_inst.data_out(rx_data);
-        rxUnit_inst.rxd_in(txd_rxd);
+        rxUnit_inst.rxd_in(rxd);
         rxUnit_inst.frame_err(f_err);
         rxUnit_inst.output_err(o_err);
         rxUnit_inst.data_rdy(d_rdy);
@@ -106,13 +108,13 @@ SC_MODULE(miniuart){
     }
 
     void interface_Process(){
-        std::cout << "interface_Process triggered" << std::endl;
-        
+        // std::cout << "interface_Process triggered" << std::endl;
         if((ce -> read() == true)
         && (wr -> read() == true)
         && (addr -> read() == 0)){
             load.write(SC_LOGIC_1);
             tx_data.write(data_in -> read());
+            std::cout << "data in = " << data_in -> read() << std::endl<< std::endl;
         } else {
             load.write(SC_LOGIC_0);
             tx_data.write("00000000");
@@ -123,6 +125,7 @@ SC_MODULE(miniuart){
             if(addr -> read() == 0){
                 read.write(SC_LOGIC_1);
                 data_out -> write(rx_data.read());
+                std::cout << "data out = " << data_out -> read() << std::endl<< std::endl;
             }
             else if(addr -> read() == 1){
                 read.write(SC_LOGIC_0);
@@ -138,15 +141,17 @@ SC_MODULE(miniuart){
     }
 
     void combinational(){
-        std::cout << "combinational triggered" << std::endl;
+        // std::cout << "combinational triggered" << std::endl;
 
         if((buf_empty.read() == true) && (reg_empty.read() == false)){
             irqTX -> write(SC_LOGIC_1);
         } else {
             irqTX -> write(SC_LOGIC_0);    
-        }
+        } 
+        
 
         if(d_rdy.read() == true){
+            std::cout << "eh ba ptdr" << std::endl << std::endl;
             irqRX -> write(SC_LOGIC_1);
         } else {
             irqRX -> write(SC_LOGIC_0);    
