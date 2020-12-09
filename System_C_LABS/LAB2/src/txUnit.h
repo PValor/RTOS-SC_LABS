@@ -4,14 +4,14 @@
 #include <systemc.h>
 
 SC_MODULE(txUnit){
-    sc_in<bool>         sysclk;
-    sc_in<sc_logic>         reset;
-    sc_in<sc_logic>         enable;
-    sc_in<sc_logic>         load;
-    sc_in<sc_lv<8>>   data_in;
-    sc_out<sc_logic>        txd_send;
-    sc_out<sc_logic>        reg_empty;
-    sc_out<sc_logic>        buf_empty;
+    sc_in<bool>      sysclk;
+    sc_in<sc_logic>  reset;
+    sc_in<sc_logic>  enable;
+    sc_in<sc_logic>  load;
+    sc_in<sc_lv<8>>  data_in;
+    sc_out<sc_logic> txd_send;
+    sc_out<sc_logic> reg_empty;
+    sc_out<sc_logic> buf_empty;
 
     sc_lv<8> TReg;
     sc_lv<8> TBuf;
