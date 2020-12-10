@@ -149,6 +149,7 @@ SC_MODULE(miniuart){
             irqTX -> write(SC_LOGIC_0);    
         } 
         
+        std::cout << "d_rdy = " << d_rdy << std::endl;
 
         if(d_rdy.read() == true){
             std::cout << "eh ba ptdr" << std::endl << std::endl;

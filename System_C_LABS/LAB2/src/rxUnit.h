@@ -79,39 +79,40 @@ SC_MODULE(rxUnit){
                         // std::cout << sc_time_stamp() << " RAZ"<< std::endl;
                     }
 
-                if(get_data == true){
-                    rxd = rxd_in -> read();
-                    // std::cout << sc_time_stamp() << " rxd = " << rxd << std::endl;
-                    switch(bitCount){
-                        case 0 : 
-                            if(rxd == false){
-                                // std::cout << sc_time_stamp() << " bit start detecte" << std::endl;
+                    if(get_data == true){
+                        rxd = rxd_in -> read();
+                        std::cout << sc_time_stamp() << " bit_count = " << bitCount << std::endl;
+                        switch(bitCount){
+                            case 0 : 
+                                if(rxd == false){
+                                    // std::cout << sc_time_stamp() << " bit start detecte" << std::endl;
+                                    bitCount++;
+                                }
+                            break;
+
+                            case  1 ... 8:
+                                shift_reg[bitCount-1] = rxd;
                                 bitCount++;
-                            }
-                        break;
+                            break;
 
-                        case  1 ... 8:
-                            shift_reg[bitCount-1] = rxd;
-                            bitCount++;
-                        break;
+                            case 9 :
+                                if(rxd != true){
+                                    temp_frame_err = true;
+                                    frame_err -> write(temp_frame_err);
+                                }
 
-                        case 9 :
-                            if(rxd != true){
-                                temp_frame_err = true;
-                                frame_err -> write(temp_frame_err);
-                            }
+                                if(temp_data_rdy == true){
+                                    temp_output_err = true;
+                                    output_err -> write(temp_output_err);
+                                }
+                                temp_data_rdy = true;
+                                data_rdy -> write(temp_data_rdy);
 
-                            if(temp_data_rdy == true){
-                                temp_output_err = true;
-                                output_err -> write(temp_output_err);
-                            }
-                            temp_data_rdy = true;
-                            data_rdy -> write(temp_data_rdy);
 
-                            data_out -> write(shift_reg);
-                            bitCount = 0;
-                        break;
-                    }
+                                data_out -> write(shift_reg);
+                                bitCount = 0;
+                            break;
+                        }
                     }
                 }
             }
