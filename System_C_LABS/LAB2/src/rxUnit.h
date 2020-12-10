@@ -4,12 +4,12 @@
 #include <systemc.h>
 
 SC_MODULE(rxUnit){
-    sc_in<bool>         sysclk;
+    sc_in<bool>             sysclk;
     sc_in<sc_logic>         reset;
     sc_in<sc_logic>         enable;
     sc_in<sc_logic>         read;
     sc_in<sc_logic>         rxd_in;
-    sc_out<sc_lv<8>>  data_out;
+    sc_out<sc_lv<8>>        data_out;
     sc_out<sc_logic>        frame_err;
     sc_out<sc_logic>        output_err;
     sc_out<sc_logic>        data_rdy;
@@ -69,19 +69,19 @@ SC_MODULE(rxUnit){
                     output_err -> write(temp_output_err);
                     data_rdy -> write(temp_data_rdy);
                 }
-
+                
                 if(enable -> read() == true){
                     if(clockCount < 15){
                         clockCount++;
                         get_data = (clockCount == 7)? true : false;
                     } else {
-                        clockCount = 0;
-                        // std::cout << sc_time_stamp() << " RAZ"<< std::endl;
+                        clockCount = 0;  
                     }
 
+                    // std::cout << sc_time_stamp() << " get_datad = " << get_data << std::endl;
                     if(get_data == true){
                         rxd = rxd_in -> read();
-                        std::cout << sc_time_stamp() << " bit_count = " << bitCount << std::endl;
+                        // std::cout << sc_time_stamp() << " bit_count = " << bitCount << std::endl;
                         switch(bitCount){
                             case 0 : 
                                 if(rxd == false){

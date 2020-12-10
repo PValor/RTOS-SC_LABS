@@ -88,7 +88,7 @@ SC_MODULE(miniuart){
         // rx unit
         rxUnit_inst.sysclk(sysclk);
         rxUnit_inst.reset(reset);
-        rxUnit_inst.enable(en_tx);
+        rxUnit_inst.enable(en_rx);
         rxUnit_inst.read(read);
         rxUnit_inst.data_out(rx_data);
         rxUnit_inst.rxd_in(rxd);
@@ -149,10 +149,10 @@ SC_MODULE(miniuart){
             irqTX -> write(SC_LOGIC_0);    
         } 
         
-        std::cout << "d_rdy = " << d_rdy << std::endl;
+        // std::cout << "d_rdy = " << d_rdy << std::endl;
 
         if(d_rdy.read() == true){
-            std::cout << "eh ba ptdr" << std::endl << std::endl;
+            // std::cout << "eh ba ptdr" << std::endl << std::endl;
             irqRX -> write(SC_LOGIC_1);
         } else {
             irqRX -> write(SC_LOGIC_0);    

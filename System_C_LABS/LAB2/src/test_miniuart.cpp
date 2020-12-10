@@ -62,7 +62,7 @@ void test_miniuart() {
     
 
 	// Run simulation
-	sc_start(15, SC_MS);
+	sc_start(10, SC_MS);
 
 	// Close Trace
 	sc_close_vcd_trace_file(tf);
